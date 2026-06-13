@@ -1,35 +1,44 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Menu, X, Star } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'Courses', href: '#courses' },
-  // { label: 'Results', href: '#results' },
-  { label: 'Faculty', href: '#faculty' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { key: 'navbar.home', href: '#home' },
+  { key: 'navbar.courses', href: '#courses' },
+  { key: 'navbar.faculty', href: '#faculty' },
+  { key: 'navbar.about', href: '#about' },
+  { key: 'navbar.contact', href: '#contact' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const { t, i18n } = useTranslation();
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 80);
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setMenuOpen(false);
-    const el = document.querySelector(href);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      e.preventDefault();
+      setMenuOpen(false);
+
+      const el = document.querySelector(href);
+
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    },
+    []
+  );
 
   return (
     <>
@@ -43,8 +52,11 @@ export default function Navbar() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-18 md:h-20 items-center justify-between">
             {/* Logo */}
-            <a href="#home" className="flex items-center gap-2 group" onClick={(e) => handleNavClick(e, '#home')}>
-              {/* <Star className="w-6 h-6 text-goldenrod fill-goldenrod group-hover:rotate-12 transition-transform duration-300" /> */}
+            <a
+              href="#home"
+              className="flex items-center gap-2 group"
+              onClick={(e) => handleNavClick(e, '#home')}
+            >
               <span className="font-display text-2xl md:text-3xl text-white tracking-tight">
                 Infinity
               </span>
@@ -53,7 +65,7 @@ export default function Navbar() {
               </span>
             </a>
 
-            {/* Desktop Nav Links */}
+            {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => (
                 <a
@@ -62,34 +74,64 @@ export default function Navbar() {
                   onClick={(e) => handleNavClick(e, link.href)}
                   className="relative font-body text-[15px] font-medium text-white/80 hover:text-goldenrod transition-colors duration-300 group"
                 >
-                  {link.label}
+                  {t(link.key)}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-goldenrod transition-all duration-300 group-hover:w-full" />
                 </a>
               ))}
+
+              {/* Language Switcher */}
+              <div className="flex items-center rounded-full border border-white/20 bg-white/5 overflow-hidden">
+                <button
+                  onClick={() => i18n.changeLanguage('en')}
+                  className={`px-3 py-1.5 text-sm font-medium transition-all ${
+                    i18n.language === 'en'
+                      ? 'bg-goldenrod text-[#000814]'
+                      : 'text-white hover:text-goldenrod'
+                  }`}
+                >
+                  EN
+                </button>
+
+                <button
+                  onClick={() => i18n.changeLanguage('mr')}
+                  className={`px-3 py-1.5 text-sm font-medium transition-all ${
+                    i18n.language === 'mr'
+                      ? 'bg-goldenrod text-[#000814]'
+                      : 'text-white hover:text-goldenrod'
+                  }`}
+                >
+                  मराठी
+                </button>
+              </div>
             </div>
 
-            {/* CTA Button + Hamburger */}
+            {/* CTA + Mobile Menu */}
             <div className="flex items-center gap-4">
               <a
                 href="#enquiry"
                 onClick={(e) => handleNavClick(e, '#enquiry')}
                 className="hidden sm:inline-flex items-center px-5 py-2.5 bg-royal text-white font-body text-sm font-semibold rounded-full hover:bg-bright hover:scale-[1.02] transition-all duration-300 shadow-glow"
               >
-                Enquire Now
+                {t('navbar.enquiry')}
               </a>
+
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
                 className="lg:hidden p-2 text-white hover:text-goldenrod transition-colors"
                 aria-label="Toggle menu"
               >
-                {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {menuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
               </button>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       <div
         className={`fixed inset-0 z-40 bg-[#000814]/98 backdrop-blur-xl transition-all duration-500 lg:hidden ${
           menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
@@ -106,12 +148,48 @@ export default function Navbar() {
                 animationDelay: `${index * 80}ms`,
                 opacity: menuOpen ? 1 : 0,
                 transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
-                transition: `opacity 0.4s ease ${index * 80}ms, transform 0.4s ease ${index * 80}ms`,
+                transition: `opacity 0.4s ease ${
+                  index * 80
+                }ms, transform 0.4s ease ${index * 80}ms`,
               }}
             >
-              {link.label}
+              {t(link.key)}
             </a>
           ))}
+
+          {/* Mobile Language Switcher */}
+          <div
+            className="flex rounded-full border border-white/20 bg-white/5 overflow-hidden"
+            style={{
+              opacity: menuOpen ? 1 : 0,
+              transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
+              transition:
+                'opacity 0.4s ease 400ms, transform 0.4s ease 400ms',
+            }}
+          >
+            <button
+              onClick={() => i18n.changeLanguage('en')}
+              className={`px-4 py-2 font-medium ${
+                i18n.language === 'en'
+                  ? 'bg-goldenrod text-[#000814]'
+                  : 'text-white'
+              }`}
+            >
+              EN
+            </button>
+
+            <button
+              onClick={() => i18n.changeLanguage('mr')}
+              className={`px-4 py-2 font-medium ${
+                i18n.language === 'mr'
+                  ? 'bg-goldenrod text-[#000814]'
+                  : 'text-white'
+              }`}
+            >
+              मराठी
+            </button>
+          </div>
+
           <a
             href="#enquiry"
             onClick={(e) => handleNavClick(e, '#enquiry')}
@@ -119,10 +197,10 @@ export default function Navbar() {
             style={{
               opacity: menuOpen ? 1 : 0,
               transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
-              transition: `opacity 0.4s ease 480ms, transform 0.4s ease 480ms`,
+              transition: 'opacity 0.4s ease 480ms, transform 0.4s ease 480ms',
             }}
           >
-            Enquire Now
+            {t('navbar.enquiry')}
           </a>
         </div>
       </div>

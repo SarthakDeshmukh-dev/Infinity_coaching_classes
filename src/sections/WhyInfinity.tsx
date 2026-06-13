@@ -5,35 +5,34 @@ import {
   ClipboardCheck,
   TrendingUp,
 } from 'lucide-react';
-
-const features = [
-  {
-    icon: Users,
-    title: 'Expert Faculty',
-    description:
-      'Learn from experienced educators and subject matter experts dedicated to student success.',
-  },
-  {
-    icon: Heart,
-    title: 'Personalized Attention',
-    description:
-      'Small batch sizes ensure every student receives individual guidance and mentorship.',
-  },
-  {
-    icon: ClipboardCheck,
-    title: 'Rigorous Testing',
-    description:
-      'Regular assessments, practice tests, and detailed performance analysis to track progress.',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Proven Results',
-    description:
-      'A consistent track record of academic excellence and outstanding student achievements.',
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function WhyInfinity() {
+  const { t } = useTranslation();
+
+  const features = [
+    {
+      icon: Users,
+      title: t('whyInfinity.features.expertFaculty.title'),
+      description: t('whyInfinity.features.expertFaculty.description'),
+    },
+    {
+      icon: Heart,
+      title: t('whyInfinity.features.personalizedAttention.title'),
+      description: t('whyInfinity.features.personalizedAttention.description'),
+    },
+    {
+      icon: ClipboardCheck,
+      title: t('whyInfinity.features.rigorousTesting.title'),
+      description: t('whyInfinity.features.rigorousTesting.description'),
+    },
+    {
+      icon: TrendingUp,
+      title: t('whyInfinity.features.provenResults.title'),
+      description: t('whyInfinity.features.provenResults.description'),
+    },
+  ];
+
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -61,7 +60,6 @@ export default function WhyInfinity() {
       ref={sectionRef}
       className="section-padding bg-space relative overflow-hidden"
     >
-      {/* Background Dot Pattern */}
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
@@ -83,28 +81,28 @@ export default function WhyInfinity() {
           >
             <div className="inline-flex items-center gap-2 mb-4 justify-center">
               <span className="w-8 h-0.5 bg-goldenrod"></span>
+
               <span className="text-goldenrod font-body text-sm font-semibold uppercase tracking-wider">
-                Why Us
+                {t('whyInfinity.sectionTitle')}
               </span>
+
               <span className="w-8 h-0.5 bg-goldenrod"></span>
             </div>
 
             <h2 className="font-display text-4xl md:text-5xl text-white leading-tight">
-              Why Students{' '}
+              {t('whyInfinity.headingPrefix')}{' '}
               <span className="relative inline-block">
-                Trust Infinity
+                {t('whyInfinity.headingHighlight')}
                 <span className="absolute -bottom-2 left-0 w-full h-1 bg-goldenrod/60 rounded-full"></span>
               </span>
             </h2>
 
             <p className="mt-6 text-white/60 text-base md:text-lg max-w-2xl mx-auto">
-              We combine experienced faculty, personalized mentoring, and
-              proven teaching methodologies to help every student achieve
-              academic excellence.
+              {t('whyInfinity.description')}
             </p>
           </div>
 
-          {/* Features Grid */}
+          {/* Features */}
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             {features.map((feature, index) => {
               const Icon = feature.icon;

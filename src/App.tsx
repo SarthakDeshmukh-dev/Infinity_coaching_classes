@@ -4,6 +4,7 @@ import Courses from '@/sections/Courses';
 import WhyInfinity from '@/sections/WhyInfinity';
 import ResultsGallery from '@/sections/ResultsGallery';
 import Faculty from '@/sections/Faculty';
+import Gallery from '@/sections/Gallery';
 import Testimonials from '@/sections/Testimonials';
 import Enquiry from '@/sections/Enquiry';
 import Contact from '@/sections/Contact';
@@ -19,6 +20,7 @@ function App() {
         <Courses />
         <WhyInfinity />
         {/* <ResultsGallery /> */}
+         <Gallery />
         <Faculty />
         <Testimonials />
         <Enquiry />

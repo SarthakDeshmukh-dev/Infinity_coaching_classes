@@ -32,9 +32,9 @@ export default function Contact() {
       id: 'email',
       icon: Mail,
       label: t('contact.details.email.label'),
-      value: 'info@infinityclasses.edu.in',
+      value: 'infinityclassesner@gmail.com',
       isPhoneGrid: false,
-      href: 'mailto:info@infinityclasses.edu.in',
+      href: 'mailto:infinityclassesner@gmail.com',
     },
     {
       id: 'hours',

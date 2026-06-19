@@ -130,34 +130,40 @@
     "experienceLabel": "Experience",
     "members": {
       "vaishnav": {
-        "name": "Dr. Vaishnav Deshmukh",
+        "name": "Prof. Vaishnav Deshmukh",
         "subject": "Physics",
-        "experience": "51 Years",
-        "credential": "PhD Physics"
+        "experience": "",
+        "credential": "M.Sc. Physics,B.Ed"
       },
-      "bhagat": {
-        "name": "Prof. Bhagat Sir",
+      "Vivek": {
+        "name": "Prof. Vivek Bhagat",
         "subject": "Chemistry",
-        "experience": "14 Years",
-        "credential": "Organic Chemistry Expert"
+        "experience": "",
+        "credential": "M.Sc. Biotechnology,B.Ed"
       },
-      "anand": {
-        "name": "Prof. Anand Sharma",
+      "Lochan": {
+        "name": "Prof. Lochan Nayhal",
         "subject": "Mathematics",
-        "experience": "22 Years",
-        "credential": "IIT Kanpur, Calculus & Algebra Specialist"
+        "experience": "",
+        "credential": "M.Sc. Math,B.Ed"
       },
-      "sneha": {
-        "name": "Dr. Sneha Nair",
+      "Sanika": {
+        "name": "Prof. Sanika Darwhatkar",
         "subject": "Biology",
-        "experience": "10 Years",
-        "credential": "AIIMS Delhi, Zoology & Botany Expert"
+        "experience": "",
+        "credential": "M.Sc. Zoology,B.Ed"
       }
     }
   }
 ,
 
 
+  "gallery": {
+    "badge": "Gallery",
+    "title": "Coaching in Action",
+    "description":"Take a glimpse into our classrooms, learning environment, and the spaces where students grow, learn, and achieve their goals."
+  }
+,
   "footer": {
     "copyright": "© {{year}} Infinity Classes. All Rights Reserved.",
     "designedWith": "Designed with",

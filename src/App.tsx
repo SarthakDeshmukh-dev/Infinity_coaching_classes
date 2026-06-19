@@ -20,9 +20,10 @@ function App() {
         <Courses />
         <WhyInfinity />
         {/* <ResultsGallery /> */}
-         <Gallery />
         <Faculty />
-        <Testimonials />
+         <Gallery />
+        
+        {/* <Testimonials /> */}
         <Enquiry />
         <Contact />
       </main>

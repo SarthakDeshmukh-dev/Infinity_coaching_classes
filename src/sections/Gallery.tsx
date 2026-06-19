@@ -1,5 +1,5 @@
 'use client';
-
+import { useTranslation } from 'react-i18next';
 import { useEffect, useRef, useState } from 'react';
 import { galleryData } from '@/data/galleryData';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
@@ -8,7 +8,7 @@ export default function Gallery() {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
-
+  const { t } = useTranslation();
   // IntersectionObserver for visibility animation
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -66,9 +66,8 @@ export default function Gallery() {
     <>
       <section
         ref={sectionRef}
-        className={`py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-ivory transition-all duration-1000 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        }`}
+        className={`py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-ivory transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
@@ -76,16 +75,15 @@ export default function Gallery() {
             <div className="inline-flex items-center gap-2 mb-4">
               <span className="w-8 h-0.5 bg-goldenrod" />
               <span className="text-royal font-body text-sm font-semibold uppercase">
-                Gallery
+                {t('gallery.badge')}
               </span>
               <span className="w-8 h-0.5 bg-goldenrod" />
             </div>
             <h2 className="text-4xl md:text-5xl font-display font-bold text-text-dark mb-4">
-              Coaching in Action
+             {t('gallery.title')}
             </h2>
             <p className="text-text-muted text-lg md:text-xl max-w-2xl">
-              See our world-class facilities, dedicated faculty, and vibrant student community
-              in action.
+             {t('gallery.description')}
             </p>
           </div>
 
@@ -94,11 +92,10 @@ export default function Gallery() {
             {galleryData.map((item, index) => (
               <div
                 key={item.id}
-                className={`group relative bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 cursor-pointer transform hover:scale-105 ${
-                  isVisible
+                className={`group relative bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 cursor-pointer transform hover:scale-105 ${isVisible
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-8'
-                }`}
+                  }`}
                 style={{
                   transitionDelay: isVisible ? `${300 + index * 100}ms` : '0ms',
                 }}
@@ -108,23 +105,22 @@ export default function Gallery() {
                 <div className="aspect-square overflow-hidden">
                   <img
                     src={item.image}
-                    alt={item.alt}
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 </div>
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#000814]/90 via-[#000814]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                {/* <div className="absolute inset-0 bg-gradient-to-t from-[#000814]/90 via-[#000814]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                   <div className="text-white">
                     <p className="text-sm font-semibold uppercase tracking-wide">
-                      {item.alt}
+                      {item}
                     </p>
                     <p className="text-xs text-gray-300 mt-1 capitalize">
                       {item.category === 'class' ? 'Class' : 'Facility'}
                     </p>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Zoom Icon */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -157,59 +153,47 @@ export default function Gallery() {
           onClick={() => setSelectedImageIndex(null)}
         >
           <div
-            className="relative max-w-4xl w-full max-h-[90vh] flex flex-col"
+            className="relative max-w-6xl w-full h-[90vh]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="text-white text-sm font-medium">
-                {selectedImageIndex + 1} / {galleryData.length}
-              </div>
-              <button
-                onClick={() => setSelectedImageIndex(null)}
-                className="text-white hover:text-gray-300 transition-colors p-2 -mr-2 -mt-2"
-              >
-                <X size={24} />
-              </button>
+            {/* Image Counter */}
+            <div className="absolute top-4 left-4 z-20 text-white text-sm font-medium bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full">
+              {selectedImageIndex + 1} / {galleryData.length}
             </div>
 
-            {/* Image Container */}
-            <div className="flex-1 flex items-center justify-center min-h-0 mb-4">
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedImageIndex(null)}
+              className="absolute top-4 right-4 z-20 bg-black/50 backdrop-blur-sm hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+              aria-label="Close gallery"
+            >
+              <X size={24} />
+            </button>
+
+            {/* Previous Button */}
+            <button
+              onClick={handlePrevImage}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 backdrop-blur-sm hover:bg-black/70 text-white p-3 rounded-full transition-colors"
+              aria-label="Previous image"
+            >
+              <ChevronLeft size={24} />
+            </button>
+
+            {/* Next Button */}
+            <button
+              onClick={handleNextImage}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 backdrop-blur-sm hover:bg-black/70 text-white p-3 rounded-full transition-colors"
+              aria-label="Next image"
+            >
+              <ChevronRight size={24} />
+            </button>
+
+            {/* Image */}
+            <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img
                 src={galleryData[selectedImageIndex].image}
-                alt={galleryData[selectedImageIndex].alt}
-                className="w-full h-full object-contain"
+                className="max-w-full max-h-full object-contain"
               />
-            </div>
-
-            {/* Footer with Navigation */}
-            <div className="flex items-center justify-between">
-              <button
-                onClick={handlePrevImage}
-                className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-colors"
-                aria-label="Previous image"
-              >
-                <ChevronLeft size={24} />
-              </button>
-
-              <div className="text-center flex-1 px-4">
-                <p className="text-white font-semibold">
-                  {galleryData[selectedImageIndex].alt}
-                </p>
-                <p className="text-gray-400 text-sm mt-1 capitalize">
-                  {galleryData[selectedImageIndex].category === 'class'
-                    ? 'Class Session'
-                    : 'Facility'}
-                </p>
-              </div>
-
-              <button
-                onClick={handleNextImage}
-                className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-colors"
-                aria-label="Next image"
-              >
-                <ChevronRight size={24} />
-              </button>
             </div>
           </div>
         </div>

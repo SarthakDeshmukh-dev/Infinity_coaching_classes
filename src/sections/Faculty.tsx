@@ -15,29 +15,29 @@ export default function Faculty() {
       borderColor: 'group-hover:border-red-400/50',
     },
     {
-      name: t('faculty.members.bhagat.name'),
-      subject: t('faculty.members.bhagat.subject'),
-      experience: t('faculty.members.bhagat.experience'),
-      credential: t('faculty.members.bhagat.credential'),
+      name: t('faculty.members.Vivek.name'),
+      subject: t('faculty.members.Vivek.subject'),
+      experience: t('faculty.members.Vivek.experience'),
+      credential: t('faculty.members.Vivek.credential'),
       image: '/images/faculty-2.jpeg',
       tagColor: 'bg-teal-100 text-teal-700',
       borderColor: 'group-hover:border-teal-400/50',
     },
     {
-      name: t('faculty.members.anand.name'),
-      subject: t('faculty.members.anand.subject'),
-      experience: t('faculty.members.anand.experience'),
-      credential: t('faculty.members.anand.credential'),
-      image: '/images/faculty-3.jpg',
+      name: t('faculty.members.Lochan.name'),
+      subject: t('faculty.members.Lochan.subject'),
+      experience: t('faculty.members.Lochan.experience'),
+      credential: t('faculty.members.Lochan.credential'),
+      image: '/images/faculty-3.jpeg',
       tagColor: 'bg-orange-100 text-orange-700',
       borderColor: 'group-hover:border-orange-400/50',
     },
     {
-      name: t('faculty.members.sneha.name'),
-      subject: t('faculty.members.sneha.subject'),
-      experience: t('faculty.members.sneha.experience'),
-      credential: t('faculty.members.sneha.credential'),
-      image: '/images/faculty-4.jpg',
+      name: t('faculty.members.Sanika.name'),
+      subject: t('faculty.members.Sanika.subject'),
+      experience: t('faculty.members.Sanika.experience'),
+      credential: t('faculty.members.Sanika.credential'),
+      image: '/images/faculty-4.jpeg',
       tagColor: 'bg-emerald-100 text-emerald-700',
       borderColor: 'group-hover:border-emerald-400/50',
     },
@@ -199,7 +199,7 @@ export default function Faculty() {
                     {member.credential}
                   </p>
 
-                  <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
+                  {/* <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
                     <span className="text-goldenrod font-body text-sm font-medium">
                       {member.experience}
                     </span>
@@ -207,7 +207,7 @@ export default function Faculty() {
                     <span className="text-white/40 font-body text-xs">
                       {t('faculty.experienceLabel')}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

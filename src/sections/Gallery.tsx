@@ -5,6 +5,8 @@ import { galleryData } from '@/data/galleryData';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 export default function Gallery() {
+  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
+  const [lightboxLoading, setLightboxLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -49,14 +51,15 @@ export default function Gallery() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedImageIndex]);
-
   const handlePrevImage = () => {
+    setLightboxLoading(true);
     setSelectedImageIndex((prev) =>
       prev === null ? 0 : prev === 0 ? galleryData.length - 1 : prev - 1
     );
   };
 
   const handleNextImage = () => {
+    setLightboxLoading(true);
     setSelectedImageIndex((prev) =>
       prev === null ? 0 : (prev + 1) % galleryData.length
     );
@@ -71,42 +74,58 @@ export default function Gallery() {
       >
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
-          <div className="mb-12 md:mb-16">
-            <div className="inline-flex items-center gap-2 mb-4">
+          <div className="mb-12 md:mb-16 text-center">
+            <div className="inline-flex items-center justify-center gap-2 mb-4">
               <span className="w-8 h-0.5 bg-goldenrod" />
               <span className="text-royal font-body text-sm font-semibold uppercase">
                 {t('gallery.badge')}
               </span>
               <span className="w-8 h-0.5 bg-goldenrod" />
             </div>
+
             <h2 className="text-4xl md:text-5xl font-display font-bold text-text-dark mb-4">
-             {t('gallery.title')}
+              {t('gallery.title')}
             </h2>
-            <p className="text-text-muted text-lg md:text-xl max-w-2xl">
-             {t('gallery.description')}
+
+            <p className="text-text-muted text-lg md:text-xl max-w-2xl mx-auto">
+              {t('gallery.description')}
             </p>
           </div>
-
           {/* Gallery Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {galleryData.map((item, index) => (
               <div
                 key={item.id}
                 className={`group relative bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 cursor-pointer transform hover:scale-105 ${isVisible
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-8'
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-8'
                   }`}
                 style={{
                   transitionDelay: isVisible ? `${300 + index * 100}ms` : '0ms',
                 }}
-                onClick={() => setSelectedImageIndex(index)}
-              >
+                onClick={() => {
+                  setLightboxLoading(true);
+                  setSelectedImageIndex(index);
+                }}              >
                 {/* Image Container */}
-                <div className="aspect-square overflow-hidden">
+                <div className="aspect-square overflow-hidden relative">
+                  {!loadedImages[index] && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse">
+                      <div className="w-10 h-10 border-4 border-gray-300 border-t-royal rounded-full animate-spin" />
+                    </div>
+                  )}
+
                   <img
                     src={item.image}
                     loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    onLoad={() =>
+                      setLoadedImages((prev) => ({
+                        ...prev,
+                        [index]: true,
+                      }))
+                    }
+                    className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-500 ${loadedImages[index] ? 'opacity-100' : 'opacity-0'
+                      }`}
                   />
                 </div>
 
@@ -189,10 +208,18 @@ export default function Gallery() {
             </button>
 
             {/* Image */}
-            <div className="w-full h-full flex items-center justify-center overflow-hidden">
+            <div className="w-full h-full flex items-center justify-center overflow-hidden relative">
+              {lightboxLoading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+                </div>
+              )}
+
               <img
                 src={galleryData[selectedImageIndex].image}
-                className="max-w-full max-h-full object-contain"
+                onLoad={() => setLightboxLoading(false)}
+                className={`max-w-full max-h-full object-contain transition-opacity duration-300 ${lightboxLoading ? 'opacity-0' : 'opacity-100'
+                  }`}
               />
             </div>
           </div>

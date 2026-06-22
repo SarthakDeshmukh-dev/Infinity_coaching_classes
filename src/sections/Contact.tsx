@@ -7,7 +7,7 @@ export default function Contact() {
 
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-
+  const [mapLoading, setMapLoading] = useState(true);
   const contactDetails = [
     {
       id: 'address',
@@ -81,11 +81,10 @@ export default function Contact() {
       <div className="container-custom max-w-7xl mx-auto px-4">
         {/* Section Header */}
         <div
-          className={`text-center mb-14 md:mb-20 transition-all duration-700 ${
-            isVisible
+          className={`text-center mb-14 md:mb-20 transition-all duration-700 ${isVisible
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-8'
-          }`}
+            }`}
         >
           <div className="inline-flex items-center gap-2 mb-4">
             <span className="w-8 h-0.5 bg-goldenrod" />
@@ -107,11 +106,10 @@ export default function Contact() {
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-stretch">
           {/* Contact Info */}
           <div
-            className={`transition-all duration-700 delay-300 ${
-              isVisible
+            className={`transition-all duration-700 delay-300 ${isVisible
                 ? 'opacity-100 translate-x-0'
                 : 'opacity-0 -translate-x-10'
-            }`}
+              }`}
           >
             <div className="bg-white rounded-3xl p-6 md:p-8 shadow-card h-full flex flex-col justify-between">
               <div>
@@ -192,13 +190,23 @@ export default function Contact() {
 
           {/* Google Map */}
           <div
-            className={`transition-all duration-700 delay-500 ${
-              isVisible
+            className={`transition-all duration-700 delay-500 ${isVisible
                 ? 'opacity-100 translate-x-0'
                 : 'opacity-0 translate-x-10'
-            }`}
+              }`}
           >
-            <div className="bg-white rounded-3xl overflow-hidden shadow-card h-full min-h-[400px]">
+            <div className="bg-white rounded-3xl overflow-hidden shadow-card h-full min-h-[400px] relative">
+              {mapLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-white z-10">
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="w-10 h-10 border-4 border-royal/20 border-t-royal rounded-full animate-spin" />
+                    <span className="text-sm text-text-muted font-body">
+                      Loading map...
+                    </span>
+                  </div>
+                </div>
+              )}
+
               <iframe
                 title={t('contact.mapTitle')}
                 src="https://maps.google.com/maps?q=Behind%20Ner%20Urban%20Bank,%20Near%20ch.%20Shivaji%20Statue,%20Shivaji%20Nagar,%20Ner,%20Dist.Yavatmal,%20Maharashtra,%20445102&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -206,6 +214,7 @@ export default function Contact() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
+                onLoad={() => setMapLoading(false)}
               />
             </div>
           </div>

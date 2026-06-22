@@ -95,8 +95,8 @@ export default function Enquiry() {
     setSubmitting(true);
 
     try {
-      
-      
+
+
       const GOOGLE_SCRIPT_URL =
         'https://script.google.com/macros/s/AKfycbycHmymfEqc7dcMyLV06g0eQluE5WrxFbKgP8mSx9euVeSIyfhGJXWYspezuCN_XUWz/exec';
 
@@ -156,11 +156,10 @@ export default function Enquiry() {
       <div className="container-custom relative z-10">
         {/* Header */}
         <div
-          className={`text-center mb-14 md:mb-20 transition-all duration-700 ${
-            isVisible
+          className={`text-center mb-14 md:mb-20 transition-all duration-700 ${isVisible
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-8'
-          }`}
+            }`}
         >
           <div className="inline-flex items-center gap-2 mb-4">
             <span className="w-8 h-0.5 bg-goldenrod" />
@@ -181,11 +180,10 @@ export default function Enquiry() {
 
         {/* Form */}
         <div
-          className={`max-w-3xl mx-auto transition-all duration-700 delay-300 ${
-            isVisible
+          className={`max-w-3xl mx-auto transition-all duration-700 delay-300 ${isVisible
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-10'
-          }`}
+            }`}
         >
           <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 md:p-10 border border-white/10 shadow-2xl">
             {submitted ? (
@@ -280,30 +278,30 @@ export default function Enquiry() {
                   <div className="relative">
                     <BookOpen className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
 
-                   <select
-  value={formData.class}
-  onChange={(e) =>
-    setFormData({
-      ...formData,
-      class: e.target.value,
-    })
-  }
-  className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white appearance-none focus:outline-none focus:border-goldenrod"
->
-  <option value="" className="bg-[#0B1220] text-white">
-    {t('enquiry.fields.class.placeholder')}
-  </option>
+                    <select
+                      value={formData.class}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          class: e.target.value,
+                        })
+                      }
+                      className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white appearance-none focus:outline-none focus:border-goldenrod"
+                    >
+                      <option value="" className="bg-[#0B1220] text-white">
+                        {t('enquiry.fields.class.placeholder')}
+                      </option>
 
-  {classes.map((cls) => (
-    <option
-      key={cls}
-      value={cls}
-      className="bg-[#0B1220] text-white"
-    >
-      {cls}
-    </option>
-  ))}
-</select>
+                      {classes.map((cls) => (
+                        <option
+                          key={cls}
+                          value={cls}
+                          className="bg-[#0B1220] text-white"
+                        >
+                          {cls}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
